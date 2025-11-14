@@ -26,7 +26,7 @@
         }
       }
     },
-    "Products": {
+    "/products/": {
      "get": {
         "tags": [
           "Products"
@@ -46,6 +46,29 @@
       "post": {
         "tags": [
           "Products"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productName": {
+                  "example": "any"
+                },
+                "price": {
+                  "example": "any"
+                },
+                "color": {
+                  "example": "any"
+                },
+                "size": {
+                  "example": "any"
+                }
+              }
+            }
+          }
         ],
         "description": "",
         "responses": {
