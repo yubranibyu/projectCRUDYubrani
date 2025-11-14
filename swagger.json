@@ -5,16 +5,18 @@
     "description": "Users Api",
     "version": "1.0.0"
   },
-  "host": "cse341project1-wrax.onrender.com",
+  "host": "projectcrudyubrani.onrender.com",
   "basePath": "/",
   "schemes": [
     "https"
   ],
   "paths": {
+
     "/": {
       "get": {
         "tags": [
-          "Users"
+          "Users",
+          "Products"
         ],
         "description": "",
         "responses": {
@@ -24,6 +26,123 @@
         }
       }
     },
+    "Products": {
+     "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      
+      
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "/products/{id}": {
+        "get": {
+          "tags": [
+            "Products"
+          ],
+          "description": "",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productName": {
+                  "example": "any"
+                },
+                "price": {
+                  "example": "any"
+                },
+                "color": {
+                  "example": "any"
+                },
+                "size": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    
+    
     "/users/": {
       "get": {
         "tags": [
