@@ -7,140 +7,28 @@
   },
   "host": "projectcrudyubrani.onrender.com",
   "basePath": "/",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["https"],
   "paths": {
-
     "/": {
       "get": {
-        "tags": [
-          "Users",
-          "Products"
-        ],
+        "tags": ["Users", "Products"],
         "description": "",
         "responses": {
-          "200": {
-            "description": "OK"
-          }
+          "200": { "description": "OK" }
         }
       }
     },
-   "/products/": {
-  "get": {
-    "tags": ["Products"],
-    "description": "",
-    "responses": {
-      "200": { "description": "OK" },
-      "500": { "description": "Internal Server Error" }
-    }
-  },
-  "post": {
-    "tags": ["Products"],
-    "parameters": [
-      {
-        "name": "body",
-        "in": "body",
-        "schema": {
-          "type": "object",
-          "properties": {
-            "productName": { "example": "any" },
-            "price": { "example": "any" },
-            "color": { "example": "any" },
-            "size": { "example": "any" }
-          }
-        }
-      }
-    ],
-    "responses": {
-      "200": { "description": "OK" },
-      "500": { "description": "Internal Server Error" }
-    }
-  },
-  "put": {
-    "tags": ["Products"],
-    "parameters": [
-      {
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "type": "string"
-      },
-      {
-        "name": "body",
-        "in": "body",
-        "schema": {
-          "type": "object",
-          "properties": {
-            "productName": { "example": "any" },
-            "price": { "example": "any" },
-            "color": { "example": "any" },
-            "size": { "example": "any" }
-          }
-        }
-      }
-    ],
-    "responses": {
-      "200": { "description": "OK" },
-      "500": { "description": "Internal Server Error" }
-    }
-  },
-  "delete": {
-    "tags": ["Products"],
-    "parameters": [
-      {
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "type": "string"
-      }
-    ],
-    "responses": {
-      "200": { "description": "OK" },
-      "500": { "description": "Internal Server Error" }
-    }
-  }
-},
 
-"/products/{id}": {
-  "get": {
-    "tags": ["Products"],
-    "description": "",
-    "parameters": [
-      {
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "type": "string"
-      }
-    ],
-    "responses": {
-      "200": { "description": "OK" }
-    }
-  }
-},
-
-    
-    "/users/": {
+    "/products/": {
       "get": {
-        "tags": [
-          "Users"
-        ],
-        "description": "",
+        "tags": ["Products"],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "post": {
-        "tags": [
-          "Users"
-        ],
-        "description": "",
+        "tags": ["Products"],
         "parameters": [
           {
             "name": "body",
@@ -148,41 +36,24 @@
             "schema": {
               "type": "object",
               "properties": {
-                "FirstName": {
-                  "example": "any"
-                },
-                "LastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "favoriteColor": {
-                  "example": "any"
-                },
-                "birthday": {
-                  "example": "any"
-                }
+                "productName": { "example": "any" },
+                "price": { "example": "any" },
+                "color": { "example": "any" },
+                "size": { "example": "any" }
               }
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
-    "/users/{id}": {
+
+    "/products/{id}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
-        "description": "",
+        "tags": ["Products"],
         "parameters": [
           {
             "name": "id",
@@ -191,23 +62,10 @@
             "type": "string"
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
+        "responses": { "200": { "description": "OK" } }
       },
       "put": {
-        "tags": [
-          "Users"
-        ],
-        "description": "",
+        "tags": ["Products"],
         "parameters": [
           {
             "name": "id",
@@ -221,39 +79,21 @@
             "schema": {
               "type": "object",
               "properties": {
-                "FirstName": {
-                  "example": "any"
-                },
-                "LastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "favoriteColor": {
-                  "example": "any"
-                },
-                "birthday": {
-                  "example": "any"
-                }
+                "productName": { "example": "any" },
+                "price": { "example": "any" },
+                "color": { "example": "any" },
+                "size": { "example": "any" }
               }
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
-        "description": "",
+        "tags": ["Products"],
         "parameters": [
           {
             "name": "id",
@@ -263,12 +103,104 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "200": { "description": "OK" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+
+    "/users/": {
+      "get": {
+        "tags": ["Users"],
+        "responses": {
+          "200": { "description": "OK" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "FirstName": { "example": "any" },
+                "LastName": { "example": "any" },
+                "email": { "example": "any" },
+                "favoriteColor": { "example": "any" },
+                "birthday": { "example": "any" }
+              }
+            }
           }
+        ],
+        "responses": {
+          "204": { "description": "No Content" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+
+    "/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "FirstName": { "example": "any" },
+                "LastName": { "example": "any" },
+                "email": { "example": "any" },
+                "favoriteColor": { "example": "any" },
+                "birthday": { "example": "any" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": { "description": "No Content" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": { "description": "No Content" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     }
