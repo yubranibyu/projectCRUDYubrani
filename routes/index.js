@@ -1,15 +1,24 @@
 const express = require('express');
 const router = express.Router();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
+const passport = require('passport');
 
-router.use('/', require('./swagger'));
+// Rutas de autenticación
+router.get('/login', passport.authenticate('github'), (req, res) => {});
 
-router.get('/', (req, res) => {
-  //  #swagger.tags=['Users']
-  res.send('Welcome to the Users API');
+router.get('/logout', (req, res, next) => {
+  req.logout(err => {
+    if (err) return next(err);
+    res.redirect('/');
+  });
 });
 
+// Swagger
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// 🔥 Aquí debes cargar users y products
 router.use('/users', require('./users'));
 router.use('/products', require('./products'));
-
 
 module.exports = router;
