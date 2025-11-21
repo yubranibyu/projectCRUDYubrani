@@ -1,34 +1,45 @@
 const express = require('express');
-const app = express();
 const mongodb = require('./data/database');
 const port = 3000;
-const bodyparser = require('body-parser');
-const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv').config();
 const passport = require('passport');
 const session = require('express-session');
 const GithubStrategy = require('passport-github2').Strategy;
 const cors = require('cors');
+const app = express();
 
 
-dotenv.config();
-app.use(bodyparser.json())
+// Middleware
+
+app
+.use(bodyParser.json())
 .use(session({
   secret: 'secret',
   resave: false,
   saveUninitialized: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use((req, res, next) => {
+}))
+
+
+.use(passport.initialize())
+
+
+.use(passport.session())
+
+
+.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Z-Key');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
   next();
 })
-.use(cors({ methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] }))
+.use(cors({ methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'] }))
 .use(cors({ origin: '*' }))
-.use(cors());
+.use('/', require('./routes/index.js'));
 
+
+// Passport GitHub Strategy
 passport.use(new GithubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
@@ -37,37 +48,40 @@ passport.use(new GithubStrategy({
   (accessToken, refreshToken, profile, done) => {
     return done(null, profile);
   }
-  
 ));
-
-app.use('/', require('./routes'));
 
 passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser((obj, done) => {
-  done(null, obj);
+passport.deserializeUser((user, done) => {
+  done(null, user);
 });
 
-app.get('/', (req, res) => ( res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.displayName}` : 'Logged out')));
+// Routes
+app.get('/', (req, res) => {
+  res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.displayName}` : 'Logged out');
+});
 
-app.get('/github/callback', passport.authenticate('github', { failureRedirect: '/api-docs', session: false}),
+
+
+// GitHub callback
+app.get('/github/callback', passport.authenticate('github', { failureRedirect: '/api-docs', session: false }),
   (req, res) => {
     req.session.user = req.user;
     res.redirect('/');
   }
-  );
+);
 
 
 
+// MongoDB Init
 mongodb.initDB((err) => {
   if (err) {
     console.log(err);
-  }
-  else {
+  } else {
     app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+      console.log(`Server is running at http://localhost:${port}`);
+    });
   }
 });

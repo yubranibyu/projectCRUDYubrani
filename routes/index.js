@@ -7,6 +7,7 @@ const passport = require('passport');
 // Rutas de autenticación
 router.get('/login', passport.authenticate('github'), (req, res) => {});
 
+
 router.get('/logout', (req, res, next) => {
   req.logout(err => {
     if (err) return next(err);
@@ -14,10 +15,10 @@ router.get('/logout', (req, res, next) => {
   });
 });
 
-// Swagger
+
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// 🔥 Aquí debes cargar users y products
+
 router.use('/users', require('./users'));
 router.use('/products', require('./products'));
 
