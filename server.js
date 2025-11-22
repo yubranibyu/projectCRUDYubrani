@@ -1,8 +1,13 @@
+require('dotenv').config();
+
+
 const express = require('express');
 const mongodb = require('./data/database');
+
 const port = 3000;
 const bodyParser = require('body-parser');
-const dotenv = require('dotenv').config();
+
+
 const passport = require('passport');
 const session = require('express-session');
 const GithubStrategy = require('passport-github2').Strategy;
@@ -10,7 +15,13 @@ const cors = require('cors');
 const app = express();
 
 
+
+
+
+
+
 // Middleware
+
 
 app
 .use(bodyParser.json())
@@ -44,8 +55,10 @@ passport.use(new GithubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
     callbackURL: process.env.GITHUB_CALLBACK_URL
+  
   },
-   function(accessToken, refreshToken, profile, done)  {
+
+  function(accessToken, refreshToken, profile, done)  {
     
     return done(null, profile);
   }
@@ -59,11 +72,12 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
+
+
 // Routes
 app.get('/', (req, res) => {
   res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.displayName}` : 'Logged out');
 });
-
 
 
 // GitHub callback

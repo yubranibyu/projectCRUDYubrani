@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger.json');
-const passport = require('passport');
+
 
 // Rutas de autenticación
 router.get('/login', passport.authenticate('github'), (req, res) => {});
@@ -14,6 +15,8 @@ router.get('/logout', (req, res, next) => {
     res.redirect('/');
   });
 });
+
+
 
 
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
