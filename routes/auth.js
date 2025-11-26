@@ -10,7 +10,7 @@ router.get(
   '/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('/'); // Aquí puedes redirigir al dashboard, productos, etc.
+    res.redirect('/'); 
   }
 );
 

@@ -11,7 +11,7 @@
   "paths": {
     "/": {
       "get": {
-        "tags": ["Users", "Products"],
+        "tags": ["Status"],
         "summary": "Home Route",
         "responses": {
           "200": { "description": "Server is running" }
@@ -22,6 +22,9 @@
       "get": {
         "tags": ["Products"],
         "summary": "Get all products",
+        "parameters": [
+          
+        ],
         "responses": {
           "200": { "description": "List of products" },
           "500": { "description": "Server error" }
@@ -29,19 +32,26 @@
       },
       "post": {
         "tags": ["Products"],
-        "summary": "Create a new product (Protected)",
+        "summary": "Create a new product",
         "parameters": [
           {
-            "name": "body",
             "in": "body",
+            "name": "body",
             "required": true,
             "schema": {
               "type": "object",
+              "required": ["productName", "price", "color", "size"],
               "properties": {
-                "productName": { "type": "string", "example": "Laptop" },
-                "price": { "type": "number", "example": 999.99 },
-                "color": { "type": "string", "example": "Black" },
-                "size": { "type": "string", "example": "Medium" }
+                "productName": { "type": "string" },
+                "price": { "type": "number" },
+                "color": { "type": "string" },
+                "size": { "type": "string" }
+              },
+              "example": {
+                "productName": "Laptop Gamer",
+                "price": 1500,
+                "color": "Black",
+                "size": "15.6 inches"
               }
             }
           }
@@ -57,7 +67,9 @@
       "get": {
         "tags": ["Products"],
         "summary": "Get product by ID",
-        "parameters": [{ "name": "id", "in": "path", "required": true }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" }
+        ],
         "responses": {
           "200": { "description": "Product found" },
           "404": { "description": "Not Found" }
@@ -65,12 +77,12 @@
       },
       "put": {
         "tags": ["Products"],
-        "summary": "Update product by ID (Protected)",
+        "summary": "Update product by ID",
         "parameters": [
-          { "name": "id", "in": "path", "required": true },
+          { "name": "id", "in": "path", "required": true, "type": "string" },
           {
-            "name": "body",
             "in": "body",
+            "name": "body",
             "schema": {
               "type": "object",
               "properties": {
@@ -78,6 +90,12 @@
                 "price": { "type": "number" },
                 "color": { "type": "string" },
                 "size": { "type": "string" }
+              },
+              "example": {
+                "productName": "Updated Product",
+                "price": 1200,
+                "color": "White",
+                "size": "17 inches"
               }
             }
           }
@@ -90,14 +108,17 @@
       },
       "delete": {
         "tags": ["Products"],
-        "summary": "Delete product by ID (Protected)",
-        "parameters": [{ "name": "id", "in": "path", "required": true }],
+        "summary": "Delete product by ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" }
+        ],
         "responses": {
           "200": { "description": "Product deleted" },
           "500": { "description": "Server error" }
         }
       }
     },
+
     "/users": {
       "get": {
         "tags": ["Users"],
@@ -109,19 +130,27 @@
       },
       "post": {
         "tags": ["Users"],
-        "summary": "Create a new user (Protected)",
+        "summary": "Create a new user",
         "parameters": [
           {
-            "name": "body",
             "in": "body",
+            "name": "body",
             "schema": {
               "type": "object",
+              "required": ["FirstName", "LastName", "email"],
               "properties": {
-                "FirstName": { "type": "string", "example": "John" },
-                "LastName": { "type": "string", "example": "Doe" },
-                "email": { "type": "string", "example": "john@example.com" },
-                "favoriteColor": { "type": "string", "example": "Blue" },
-                "birthday": { "type": "string", "example": "1990-01-01" }
+                "FirstName": { "type": "string" },
+                "LastName": { "type": "string" },
+                "email": { "type": "string" },
+                "favoriteColor": { "type": "string" },
+                "birthday": { "type": "string" }
+              },
+              "example": {
+                "FirstName": "John",
+                "LastName": "Doe",
+                "email": "john@example.com",
+                "favoriteColor": "Blue",
+                "birthday": "1990-01-01"
               }
             }
           }
@@ -133,11 +162,14 @@
         }
       }
     },
+
     "/users/{id}": {
       "get": {
         "tags": ["Users"],
         "summary": "Get user by ID",
-        "parameters": [{ "name": "id", "in": "path", "required": true }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" }
+        ],
         "responses": {
           "200": { "description": "User found" },
           "404": { "description": "Not found" }
@@ -145,12 +177,12 @@
       },
       "put": {
         "tags": ["Users"],
-        "summary": "Update user by ID (Protected)",
+        "summary": "Update user by ID",
         "parameters": [
-          { "name": "id", "in": "path", "required": true },
+          { "name": "id", "in": "path", "required": true, "type": "string" },
           {
-            "name": "body",
             "in": "body",
+            "name": "body",
             "schema": {
               "type": "object",
               "properties": {
@@ -170,8 +202,10 @@
       },
       "delete": {
         "tags": ["Users"],
-        "summary": "Delete user by ID (Protected)",
-        "parameters": [{ "name": "id", "in": "path", "required": true }],
+        "summary": "Delete user by ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" }
+        ],
         "responses": {
           "200": { "description": "User deleted" }
         }

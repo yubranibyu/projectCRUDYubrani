@@ -6,7 +6,8 @@ const validateUser = (user) =>
 
 const getAll = async (req, res) => {
   try {
-    const users = await mongodb.getDB().collection('users').find().toArray();
+    const db = mongodb.getDB();
+    const users = await db.collection('users').find().toArray();
     res.status(200).json(users);
   } catch (err) {
     res.status(500).json({ error: 'Failed obtaining users' });

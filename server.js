@@ -6,7 +6,7 @@ const passport = require('passport');
 const session = require('express-session');
 const cors = require('cors');
 
-require('./config/passport'); // ✔ configuración única de passport
+require('./config/passport'); 
 
 const app = express();
 const port = process.env.PORT || 3000;

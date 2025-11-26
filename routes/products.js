@@ -5,11 +5,10 @@ const productsController = require('../controllers/products');
 
 const { IsAuthenticated } = require('../middleware/authenticate'); 
 
-// Rutas públicas
 router.get('/', productsController.getAll);
 router.get('/:id', productsController.getSingle);
 
-// Rutas protegidas
+    
 router.post('/', IsAuthenticated, productsController.createProduct);
 router.put('/:id', IsAuthenticated, productsController.updateProduct);
 router.delete('/:id', IsAuthenticated, productsController.deleteProduct);
