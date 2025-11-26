@@ -1,9 +1,8 @@
 {
-   
   "swagger": "2.0",
   "info": {
-    "title": "Users Api",
-    "description": "Users Api",
+    "title": "Users & Products API",
+    "description": "API for managing users and products",
     "version": "1.0.0"
   },
   "host": "projectcrudyubrani.onrender.com",
@@ -13,113 +12,104 @@
     "/": {
       "get": {
         "tags": ["Users", "Products"],
-        "description": "",
+        "summary": "Home Route",
         "responses": {
-          "200": { "description": "OK" }
+          "200": { "description": "Server is running" }
         }
       }
     },
-
-    "/products/": {
+    "/products": {
       "get": {
         "tags": ["Products"],
+        "summary": "Get all products",
         "responses": {
-          "200": { "description": "OK" },
-          "500": { "description": "Internal Server Error" }
+          "200": { "description": "List of products" },
+          "500": { "description": "Server error" }
         }
       },
       "post": {
         "tags": ["Products"],
+        "summary": "Create a new product (Protected)",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "productName": { "example": "any" },
-                "price": { "example": "any" },
-                "color": { "example": "any" },
-                "size": { "example": "any" }
+                "productName": { "type": "string", "example": "Laptop" },
+                "price": { "type": "number", "example": 999.99 },
+                "color": { "type": "string", "example": "Black" },
+                "size": { "type": "string", "example": "Medium" }
               }
             }
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "500": { "description": "Internal Server Error" }
+          "201": { "description": "Product created" },
+          "400": { "description": "Validation error" },
+          "500": { "description": "Server error" }
         }
       }
     },
-
     "/products/{id}": {
       "get": {
         "tags": ["Products"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": { "200": { "description": "OK" } }
+        "summary": "Get product by ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true }],
+        "responses": {
+          "200": { "description": "Product found" },
+          "404": { "description": "Not Found" }
+        }
       },
       "put": {
         "tags": ["Products"],
+        "summary": "Update product by ID (Protected)",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
+          { "name": "id", "in": "path", "required": true },
           {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "productName": { "example": "any" },
-                "price": { "example": "any" },
-                "color": { "example": "any" },
-                "size": { "example": "any" }
+                "productName": { "type": "string" },
+                "price": { "type": "number" },
+                "color": { "type": "string" },
+                "size": { "type": "string" }
               }
             }
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "500": { "description": "Internal Server Error" }
+          "200": { "description": "Product updated" },
+          "400": { "description": "Validation error" },
+          "500": { "description": "Server error" }
         }
       },
       "delete": {
         "tags": ["Products"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "summary": "Delete product by ID (Protected)",
+        "parameters": [{ "name": "id", "in": "path", "required": true }],
         "responses": {
-          "200": { "description": "OK" },
-          "500": { "description": "Internal Server Error" }
+          "200": { "description": "Product deleted" },
+          "500": { "description": "Server error" }
         }
       }
     },
-
-    "/users/": {
+    "/users": {
       "get": {
         "tags": ["Users"],
+        "summary": "Get all users",
         "responses": {
-          "200": { "description": "OK" },
-          "500": { "description": "Internal Server Error" }
+          "200": { "description": "List of users" },
+          "500": { "description": "Server error" }
         }
       },
       "post": {
         "tags": ["Users"],
+        "summary": "Create a new user (Protected)",
         "parameters": [
           {
             "name": "body",
@@ -127,81 +117,63 @@
             "schema": {
               "type": "object",
               "properties": {
-                "FirstName": { "example": "any" },
-                "LastName": { "example": "any" },
-                "email": { "example": "any" },
-                "favoriteColor": { "example": "any" },
-                "birthday": { "example": "any" }
+                "FirstName": { "type": "string", "example": "John" },
+                "LastName": { "type": "string", "example": "Doe" },
+                "email": { "type": "string", "example": "john@example.com" },
+                "favoriteColor": { "type": "string", "example": "Blue" },
+                "birthday": { "type": "string", "example": "1990-01-01" }
               }
             }
           }
         ],
         "responses": {
-          "204": { "description": "No Content" },
-          "500": { "description": "Internal Server Error" }
+          "201": { "description": "User created" },
+          "400": { "description": "Validation error" },
+          "500": { "description": "Server error" }
         }
       }
     },
-
     "/users/{id}": {
       "get": {
         "tags": ["Users"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "summary": "Get user by ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true }],
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not Found" },
-          "500": { "description": "Internal Server Error" }
+          "200": { "description": "User found" },
+          "404": { "description": "Not found" }
         }
       },
       "put": {
         "tags": ["Users"],
+        "summary": "Update user by ID (Protected)",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
+          { "name": "id", "in": "path", "required": true },
           {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "FirstName": { "example": "any" },
-                "LastName": { "example": "any" },
-                "email": { "example": "any" },
-                "favoriteColor": { "example": "any" },
-                "birthday": { "example": "any" }
+                "FirstName": { "type": "string" },
+                "LastName": { "type": "string" },
+                "email": { "type": "string" },
+                "favoriteColor": { "type": "string" },
+                "birthday": { "type": "string" }
               }
             }
           }
         ],
         "responses": {
-          "204": { "description": "No Content" },
-          "500": { "description": "Internal Server Error" }
+          "200": { "description": "User updated" },
+          "500": { "description": "Server error" }
         }
       },
       "delete": {
         "tags": ["Users"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "summary": "Delete user by ID (Protected)",
+        "parameters": [{ "name": "id", "in": "path", "required": true }],
         "responses": {
-          "204": { "description": "No Content" },
-          "500": { "description": "Internal Server Error" }
+          "200": { "description": "User deleted" }
         }
       }
     }
