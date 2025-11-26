@@ -1,11 +1,8 @@
-
-
 const IsAuthenticated = (req, res, next) => {
-  if (req.session.user === undefined) {
-    return res.status(401).json( 'Unauthorized' );
-
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'Unauthorized: You must log in first' });
   }
-  next(); 
+  next();
 };
 
 module.exports = { IsAuthenticated };

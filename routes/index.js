@@ -21,7 +21,7 @@ router.get('/logout', (req, res, next) => {
 
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-
+router.use('/auth', require('./auth'));
 router.use('/users', require('./users'));
 router.use('/products', require('./products'));
 
