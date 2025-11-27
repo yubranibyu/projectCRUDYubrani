@@ -6,12 +6,17 @@ const validateProduct = (product) =>
 
 const getAll = async (req, res) => {
   try {
-    const products = await mongodb.getDB().collection('products').find().toArray();
+    const db = mongodb.getDB();
+    console.log("📌 DB connection test ->", db.namespace || "Connected");
+
+    const products = await db.collection('products').find().toArray();
     res.status(200).json(products);
   } catch (err) {
+    console.error("❌ Error inside getAll:", err);
     res.status(500).json({ error: 'Failed obtaining products' });
   }
 };
+
 
 const getSingle = async (req, res) => {
   try {

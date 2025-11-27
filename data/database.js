@@ -4,21 +4,22 @@ const { MongoClient } = require('mongodb');
 
 let db;
 
-const initDB = async (callback) => {
+const initDB = (callback) => {
   if (db) {
     console.log('Database is already initialized!');
     return callback(null, db);
   }
 
-  try {
-    const client = await MongoClient.connect(process.env.MONGODB_URI);
-    db = client.db(); // 🔥 Usa el nombre directamente desde la URI
-    console.log('Connected to MongoDB');
-    callback(null, db);
-  } catch (err) {
-    console.error('Failed to connect to MongoDB:', err);
-    callback(err);
-  }
+  MongoClient.connect(process.env.MONGODB_URI)
+    .then((client) => {
+      db = client.db('project1');
+      console.log('Connected to MongoDB');
+      callback(null, db);
+    })
+    .catch((err) => {
+      console.error('Failed to connect to MongoDB:', err);
+      callback(err);
+    });
 };
 
 const getDB = () => {

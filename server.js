@@ -11,6 +11,29 @@ require('./config/passport');
 const app = express();
 const port = process.env.PORT || 3000;
 
+
+app
+.use(bodyParser.json())
+.use(session({
+  secret: "secret",
+  resave: false,
+  saveUninitialized: true
+}))
+.use(passport.initialize())
+.use(passport.session())
+.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+})
+.use(cors({ methods: ['GET', 'POST', 'PUT', 'DELETE'], origin: '*' }))
+.use(cors(origin = '*'))
+
+app.use('/', require('./routes/index.js'));
+
+
+
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
@@ -52,7 +75,6 @@ app.get('/auth/logout', (req, res) => {
 });
 
 // Routes
-app.use('/', require('./routes/index.js'));
 
 // Database initialization
 mongodb.initDB((err) => {
