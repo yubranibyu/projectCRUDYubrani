@@ -4,9 +4,11 @@ const passport = require('passport');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger.json');
 router.use('/', require('./swagger'));
+router.use('/users', require('./users'))
+router.use('/products', require('./products'))
+router.use('/auth', require('./auth'));
 
-
-
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 router.get('/login', passport.authenticate('github'), (req, res) => {});
 
 
@@ -21,12 +23,6 @@ router.get('/logout', (req, res, next) => {
 });
 
 
-router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-
-router.use('/auth', require('./auth'));
-
-router.use('/users', require('./users'));
-router.use('/products', require('./products'));
 
 module.exports = router;

@@ -6,47 +6,40 @@ const passport = require('passport');
 const session = require('express-session');
 const cors = require('cors');
 
-require('./config/passport'); 
+require('./config/passport');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-
-app
-.use(bodyParser.json())
-.use(session({
-  secret: "secret",
-  resave: false,
-  saveUninitialized: true
-}))
-.use(passport.initialize())
-.use(passport.session())
-.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-})
-.use(cors({ methods: ['GET', 'POST', 'PUT', 'DELETE'], origin: '*' }))
-.use(cors(origin = '*'))
-
-app.use('/', require('./routes/index.js'));
-
-
-
-// Middleware
+// 🔥 Middleware ÚNICO (orden correcto)
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE'] }));
 app.use(session({
   secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
   saveUninitialized: false
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Home route
+
+passport.serializeUser((user, done) => {
+  done(null, user); 
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user); 
+});
+
+
+app.get('/test', (req, res) => {
+  res.send({
+    logged_in: req.isAuthenticated(),
+    user: req.user
+  });
+});
+
+// Ruta home
 app.get('/', (req, res) => {
   return res.status(200).send(
     req.user
@@ -74,9 +67,9 @@ app.get('/auth/logout', (req, res) => {
   });
 });
 
-// Routes
+// Rutas de la app
+app.use('/', require('./routes/index.js'));
 
-// Database initialization
 mongodb.initDB((err) => {
   if (err) {
     console.error(err);
